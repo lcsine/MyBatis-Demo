@@ -15,4 +15,9 @@ public interface UserMapper {
     User selectMap( Map<String,Object> map);
 
     List <User> selectLike( String i);
+    int insert( User user);
+
+    int update(@Param("username") String username,@Param("password")String password ,@Param("id")int id);
+
+    int delete(int id);
 }

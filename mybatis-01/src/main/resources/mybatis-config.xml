@@ -9,6 +9,12 @@
         <property name="username" value="root"/>
         <property name="password" value="root"/>
     </properties>
+    <!--别名系统-->
+    <typeAliases>
+<!--        <typeAlias type="com.ydlclass.entity.User" alias="user"/>-->
+<!--        <typeAlias type="com.ydlclass.entity.Admin" alias="admin"/>-->
+        <package name="com.ydlclass.entity"/>
+    </typeAliases>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
@@ -22,5 +28,6 @@
     </environments>
     <mappers>
         <mapper resource="Mapper/UserMapper.xml"/>
+        <mapper class="com.ydlclass.mapper.AdminMapper"/>
     </mappers>
 </configuration>

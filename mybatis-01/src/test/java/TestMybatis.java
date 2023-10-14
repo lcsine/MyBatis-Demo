@@ -1,6 +1,7 @@
 import com.ydlclass.entity.User;
 import com.ydlclass.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
+
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -36,12 +37,11 @@ public class TestMybatis {
             UserMapper mapper = session.getMapper(UserMapper.class);
             List<User> users = mapper.selectAll();
             System.out.println(users);
-
         }
     }
 
     @Test
-    public void testFindById() throws IOException {
+    public void testFindById() {
 
         try (SqlSession session = sqlSessionFactory.openSession()) {
             UserMapper mapper = session.getMapper(UserMapper.class);
@@ -51,7 +51,7 @@ public class TestMybatis {
     }
 
     @Test
-    public void testFindByPdAndU() throws IOException {
+    public void testFindByPdAndU() {
 
         try (SqlSession session = sqlSessionFactory.openSession()) {
             UserMapper mapper = session.getMapper(UserMapper.class);
@@ -62,7 +62,7 @@ public class TestMybatis {
     }
 
     @Test
-    public void testFindByMap() throws IOException {
+    public void testFindByMap() {
 
         try (SqlSession session = sqlSessionFactory.openSession()) {
             UserMapper mapper = session.getMapper(UserMapper.class);
@@ -74,13 +74,57 @@ public class TestMybatis {
             log.debug(" " + users);
         }
     }
+
     @Test
-    public void testFindLike() throws IOException {
+    public void testFindLike() {
 
         try (SqlSession session = sqlSessionFactory.openSession()) {
             UserMapper mapper = session.getMapper(UserMapper.class);
             List<User> users = mapper.selectLike("%i%");
             log.debug(" " + users);
+        }
+    }
+
+    @Test
+    public void testInsert() {
+
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            try {
+                UserMapper mapper = session.getMapper(UserMapper.class);
+                mapper.insert(new User(4, "tangyubin", "123"));
+                session.commit();
+            } catch (Exception e) {
+                log.error("err!" + e);
+                session.rollback();
+            }
+        }
+    }
+    @Test
+    public void testUpdate() {
+        try (SqlSession session = sqlSessionFactory.openSession(true)) {
+            try {
+                UserMapper mapper = session.getMapper(UserMapper.class);
+                int result = mapper.update("唐宇彬","345",4);
+                log.debug("result"+result);
+
+            } catch (Exception e) {
+                log.error("err!" + e);
+                session.rollback();
+            }
+        }
+    }
+    @Test
+    public void testDelete() {
+        try (SqlSession session = sqlSessionFactory.openSession(true)) {
+            try {
+                UserMapper mapper = session.getMapper(UserMapper.class);
+                int result = mapper.delete(4);
+                log.debug("result"+result);
+
+            } catch (Exception e) {
+                log.error("err!" + e);
+                session.rollback();
+            }
         }
     }
 }

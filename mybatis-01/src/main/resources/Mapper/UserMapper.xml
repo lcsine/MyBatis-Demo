@@ -3,8 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ydlclass.mapper.UserMapper">
+    <resultMap id="userMap" type="User">
+        <id column="id" property="id"/>
+        <!--开启驼峰式命名之后不需要设置，如果设置之后对应到entity如果设置不一样会找不到比如username和userName-->
+<!--        <result column="user_name" property="username"/>-->
+        <result column="password" property="password"/>
+    </resultMap>
     <!--查询表所有信息-->
-    <select id="selectAll" resultType="user">
+    <select id="selectAll" resultMap="userMap">
         select * from user
     </select>
     <!--根据id查信息-->

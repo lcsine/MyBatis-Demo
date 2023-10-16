@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -126,5 +127,19 @@ public class TestMybatis {
                 session.rollback();
             }
         }
+    }
+
+    public static void main(String[] args) throws IllegalAccessException {
+        User user = new User();
+        user.setUserName("lucy");
+        user.setPassword("123");
+
+        for (Field declaredField : User.class.getDeclaredFields()) {
+            declaredField.setAccessible(true);
+            Object o = declaredField.get(user);
+            System.out.println(declaredField.getName());
+            System.out.println(o);
+        }
+
     }
 }

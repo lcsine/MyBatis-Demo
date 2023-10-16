@@ -8,9 +8,9 @@ import org.apache.ibatis.type.Alias;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Alias("user1")
+
 public class User {
     private int id;
-    private String username;
+    private String userName;
     private String password;
 }

@@ -43,5 +43,7 @@
     <mappers>
         <mapper resource="Mapper/UserMapper.xml"/>
         <mapper class="com.ydlclass.mapper.AdminMapper"/>
+        <mapper resource="Mapper/EmployeeMapper.xml"/>
+        <mapper resource="Mapper/DeptMapper.xml"/>
     </mappers>
 </configuration>

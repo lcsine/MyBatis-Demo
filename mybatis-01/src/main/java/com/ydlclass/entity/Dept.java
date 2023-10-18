@@ -9,10 +9,11 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+public class Dept  implements Serializable {
 
-public class User implements Serializable {
-    public static final Long SerialVersionUID = 1L;
-    private Integer id;
-    private String username;
-    private String password;
+    private static final Long serialVersionUID = 1L;
+
+    private int id;
+    private String name;
+
 }

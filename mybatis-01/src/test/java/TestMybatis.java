@@ -1,7 +1,6 @@
 import com.ydlclass.entity.User;
 import com.ydlclass.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
-
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -11,7 +10,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,13 +98,14 @@ public class TestMybatis {
             }
         }
     }
+
     @Test
     public void testUpdate() {
         try (SqlSession session = sqlSessionFactory.openSession(true)) {
             try {
                 UserMapper mapper = session.getMapper(UserMapper.class);
-                int result = mapper.update("唐宇彬","345",4);
-                log.debug("result"+result);
+                int result = mapper.update("唐宇彬", "345", 4);
+                log.debug("result" + result);
 
             } catch (Exception e) {
                 log.error("err!" + e);
@@ -114,13 +113,14 @@ public class TestMybatis {
             }
         }
     }
+
     @Test
     public void testDelete() {
         try (SqlSession session = sqlSessionFactory.openSession(true)) {
             try {
                 UserMapper mapper = session.getMapper(UserMapper.class);
                 int result = mapper.delete(4);
-                log.debug("result"+result);
+                log.debug("result" + result);
 
             } catch (Exception e) {
                 log.error("err!" + e);
@@ -128,18 +128,57 @@ public class TestMybatis {
             }
         }
     }
-
-    public static void main(String[] args) throws IllegalAccessException {
-        User user = new User();
-        user.setUserName("lucy");
-        user.setPassword("123");
-
-        for (Field declaredField : User.class.getDeclaredFields()) {
-            declaredField.setAccessible(true);
-            Object o = declaredField.get(user);
-            System.out.println(declaredField.getName());
-            System.out.println(o);
+    @Test
+    public void testSQL() {
+        try (SqlSession session = sqlSessionFactory.openSession(true)) {
+            try {
+                UserMapper mapper = session.getMapper(UserMapper.class);
+                List<User> result = mapper.selectSql(1,"itnanls","123456");
+                log.debug("result" + result);
+            } catch (Exception e) {
+                log.error("err!" + e);
+            }
         }
-
     }
+    @Test
+    public void testUpdateSQL() {
+        try (SqlSession session = sqlSessionFactory.openSession(true)) {
+            try {
+                UserMapper mapper = session.getMapper(UserMapper.class);
+                int result = mapper.setSql(4,"itnanls",null);
+                log.debug("result" + result);
+            } catch (Exception e) {
+                log.error("err!" + e);
+            }
+        }
+    }
+    @Test
+    public void testDelSQL() {
+        try (SqlSession session = sqlSessionFactory.openSession(true)) {
+            try {
+                UserMapper mapper = session.getMapper(UserMapper.class);
+
+
+                List<Integer> ids = List.of(7,8,9,10,11,12,13);
+                int result = mapper.delByIds(ids);
+                log.debug("result" + result);
+            } catch (Exception e) {
+                log.error("err!" + e);
+            }
+        }
+    }
+    @Test
+    public void testInsertSQL() {
+        try (SqlSession session = sqlSessionFactory.openSession(true)) {
+            try {
+                UserMapper mapper = session.getMapper(UserMapper.class);
+
+                int result = mapper.insertSql(List.of(new User(null,"zxp","123"),new User(null,"lxy","456")));
+                log.debug("result" + result);
+            } catch (Exception e) {
+                log.error("err!" + e);
+            }
+        }
+    }
+
 }

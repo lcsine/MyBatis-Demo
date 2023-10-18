@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ydlclass.mapper.EmployeeMapper">
+    <resultMap id="EmployeeMap" type="Employee">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+<!--        <result column="dname" property="dname"/>-->
+<!--        <result column="dId" property="dId"/>-->
+    </resultMap>
+<!--    <sql id="sql">-->
+<!--        `name`,`id`,`did`-->
+<!--    </sql>-->
+    <sql id="sqlMore">
+        ${eml}.name,${eml}.id,${eml}.dId,${dep}.name as dname
+    </sql>
+    <select id="select" resultMap="EmployeeMap">
+        select
+        <include refid="sqlMore"/>
+        from employee
+        <where>
+            <choose>
+                <when test="id!=null">
+                    and id = #{id}
+                </when>
+                <when test="name!=null">
+                    and name = #{name}
+                </when>
+                <when test="dId!=null">
+                    and did = #(did}
+                </when>
+            </choose>
+        </where>
+    </select>
+    <select id="selectMore" resultMap="EmployeeMap">
+        select
+        <include refid="sqlMore"><property name="eml" value="e"/><property name="dep" value="d"/></include>
+        from employee e left join dept d on d.id = e.did
+
+    </select>
+
+</mapper>

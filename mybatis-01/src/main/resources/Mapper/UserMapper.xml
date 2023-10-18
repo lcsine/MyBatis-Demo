@@ -6,40 +6,108 @@
     <resultMap id="userMap" type="User">
         <id column="id" property="id"/>
         <!--开启驼峰式命名之后不需要设置，如果设置之后对应到entity如果设置不一样会找不到比如username和userName-->
-<!--        <result column="user_name" property="username"/>-->
+        <result column="user_name" property="username"/>
         <result column="password" property="password"/>
+
     </resultMap>
+    <sql id="sql">
+        ${si}.id, ${si}.user_name, password
+    </sql>
     <!--查询表所有信息-->
     <select id="selectAll" resultMap="userMap">
-        select * from user
+        select <include refid="sql"><property name="si" value="a"/></include>
+        from user a
     </select>
     <!--根据id查信息-->
     <select id="selectOne" resultType="com.ydlclass.entity.User">
-        select * from user where id = #{id}
+        select *
+        from user
+        where id = #{id}
     </select>
     <!--根据姓名和密码查信息-->
     <select id="select" resultType="com.ydlclass.entity.User">
-        select * from user where username= #{username} and password = #{password}
+        select *
+        from user
+        where user_name = #{username}
+          and password = #{password}
     </select>
     <!--传入一个对象根据成员属性查信息-->
     <select id="selectUser" resultType="com.ydlclass.entity.User">
-        select * from user where username= #{username} and password = #{password}
+        select *
+        from user
+        where user_name = #{username}
+          and password = #{password}
     </select>
     <!--传入一个map k-v键值对-->
     <select id="selectMap" resultType="com.ydlclass.entity.User">
-        select * from user where username= #{username} and password = #{password}
+        select *
+        from user
+        where user_name = #{username}
+          and password = #{password}
     </select>
     <!--模糊查询-->
     <select id="selectLike" resultType="com.ydlclass.entity.User">
-        select * from user where username like #{user}
+        select *
+        from user
+        where user_name like #{user}
     </select>
     <insert id="insert">
-        insert into `user` (id, username, password)values(#{id},#{username},#{password})
+        insert into `user` (id, user_name, password)
+        values (#{id}, #{username}, #{password})
     </insert>
     <update id="update">
-        update `user` set username=#{username},password=#{password} where id = #{id}
+        update `user`
+        set user_name=#{username},
+            password=#{password}
+        where id = #{id}
     </update>
     <delete id="delete">
-        delete from `user` where id = #{id}
+        delete
+        from `user`
+        where id = #{id}
     </delete>
+    <delete id="delByIds">
+        delete from `user` where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectSql" resultMap="userMap">
+        select * from user
+        <!--        <where>-->
+        <trim prefixOverrides="and" prefix="where">
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="username!=null">
+                and user_name = #{username}
+            </if>
+            <if test="password!=null">
+                and password = #{password}
+            </if>
+        </trim>
+        <!--        </where>-->
+    </select>
+    <update id="setSql">
+        update user
+        <set>
+            <trim suffixOverrides="," suffix="">
+                <if test="username!=null">
+                    user_name = #{username},
+                </if>
+                <if test="password!=null">
+                    password =#{password},
+                </if>
+            </trim>
+            <where>id = #{id};</where>
+        </set>
+    </update>
+    <insert id="insertSql">
+        insert into `user` (`user_name`,`password`) values
+
+        <foreach collection="users" item="user" separator=",">
+            (#{user.username},#{user.password})
+        </foreach>
+
+    </insert>
 </mapper>

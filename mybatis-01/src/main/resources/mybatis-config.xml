@@ -12,7 +12,14 @@
     <settings>
         <setting name="logImpl" value="SLF4J"/>
         <setting name="logPrefix" value="mybatis.sql"/>
+        <!--驼峰命名-->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 延迟加载的全局开关。当开启时，所有关联对象都会延迟加载。 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 开启时，任一方法的调用都会加载该对象的所有延迟加载属性。 否则，每个延迟加载属性会按需加载 -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <!--开启二级缓存-->
+        <setting name="cacheEnabled" value="true"/>
     </settings>
     <!--别名系统-->
     <typeAliases>

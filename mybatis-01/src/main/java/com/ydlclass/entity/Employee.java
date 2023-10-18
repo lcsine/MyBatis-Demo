@@ -16,7 +16,7 @@ public class Employee  implements Serializable {
     private Integer id;
     private String name;
     //维护关系
-//    private Integer dId;
+    private Integer dId;
 //    private String dname;
-    private Dept dept;
+//    private Dept dept;
 }

@@ -110,4 +110,7 @@
         </foreach>
 
     </insert>
+    <insert id="insertSelect" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into user (id,user_name, password) VALUES (#{id},#{username},#{password})
+    </insert>
 </mapper>

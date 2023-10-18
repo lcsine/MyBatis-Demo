@@ -25,4 +25,5 @@ public interface UserMapper {
     int setSql(@Param("id")Integer id,@Param("username")String username,@Param("password")String password);
     int delByIds(@Param("ids") List<Integer> ids);
     int insertSql(@Param("users") List<User> users);
+    User insertSelect(@Param("id") Integer id,@Param("username")String username,@Param("password")String password);
 }

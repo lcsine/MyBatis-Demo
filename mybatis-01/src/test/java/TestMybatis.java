@@ -180,5 +180,19 @@ public class TestMybatis {
             }
         }
     }
+    @Test
+    public void insertSelect() {
+        try (SqlSession session = sqlSessionFactory.openSession(true)) {
+            try {
+                UserMapper mapper = session.getMapper(UserMapper.class);
+
+                User result = mapper.insertSelect(null,"zxp","123");
+                log.debug("result" + result);
+            } catch (Exception e) {
+                session.rollback();
+                log.error("err!" + e);
+            }
+        }
+    }
 
 }

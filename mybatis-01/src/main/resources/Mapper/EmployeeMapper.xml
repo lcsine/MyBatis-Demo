@@ -8,6 +8,18 @@
         <result column="name" property="name"/>
 <!--        <result column="dname" property="dname"/>-->
 <!--        <result column="dId" property="dId"/>-->
+<!--        <association property="dept" column="did" javaType="Dept" select="com.ydlclass.mapper.DeptMapper.selectD">-->
+<!--            <id column="id" property="id"/>-->
+<!--            <result column="name" property="name"/>-->
+<!--        </association>-->
+    </resultMap>
+    <resultMap id="EmployeeMap2" type="Employee">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+<!--        <association property="dept" javaType="Dept">-->
+<!--            <id column="did" property="id"/>-->
+<!--            <result column="dname" property="name"/>-->
+<!--        </association>-->
     </resultMap>
 <!--    <sql id="sql">-->
 <!--        `name`,`id`,`did`-->
@@ -15,6 +27,10 @@
     <sql id="sqlMore">
         ${eml}.name,${eml}.id,${eml}.dId,${dep}.name as dname
     </sql>
+    <sql id="sqlMore2">
+        id,name,did
+    </sql>
+
     <select id="select" resultMap="EmployeeMap">
         select
         <include refid="sqlMore"/>
@@ -33,7 +49,10 @@
             </choose>
         </where>
     </select>
-    <select id="selectMore" resultMap="EmployeeMap">
+    <select id="selectById" resultMap="EmployeeMap">
+        SELECT id,name from employee where did =#{did}
+    </select>
+    <select id="selectMore" resultMap="EmployeeMap2">
         select
         <include refid="sqlMore"><property name="eml" value="e"/><property name="dep" value="d"/></include>
         from employee e left join dept d on d.id = e.did

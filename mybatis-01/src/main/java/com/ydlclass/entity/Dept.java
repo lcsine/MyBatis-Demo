@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,5 +16,6 @@ public class Dept  implements Serializable {
 
     private int id;
     private String name;
+    private List<Employee> employee;
 
 }
